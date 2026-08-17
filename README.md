@@ -22,6 +22,18 @@ Run the test suite with:
 pytest
 ```
 
+## Local Model Selection with llmfit
+
+The optional `llmfit` integration helps select a local model that fits the current machine before running a context audit or local benchmark. Context Governor invokes only an already-installed `llmfit` executable and consumes its documented JSON recommendation output; it does not download models or execute source code automatically.
+
+Install `llmfit` by following its [official installation instructions](https://github.com/AlexsJones/llmfit), then run:
+
+```bash
+acg-cli local-models --use-case coding --limit 5
+```
+
+If `llmfit` is unavailable, the command returns a structured `UNAVAILABLE` response with installation guidance.
+
 ## OpenRouter Showcase
 
 The optional showcase can route requests through OpenRouter's documented chat-completions endpoint. It reads `OPENROUTER_API_KEY` from the process environment at runtime and never writes the key to logs. Copy `.env.example` to `.env`, populate the key locally, and export it before running:

@@ -13,8 +13,8 @@ import requests
 from context_governor.connectors.openrouter import OpenRouterConnector
 
 MODELS = {
-    "OpenAI GPT-4o": "openai/gpt-4o",
-    "Anthropic Claude": "anthropic/claude-3.5-sonnet",
+    "OpenAI latest": "~openai/gpt-latest",
+    "Anthropic Claude latest": "~anthropic/claude-sonnet-latest",
     "DeepSeek": "deepseek/deepseek-chat",
 }
 TASKS = {
@@ -52,14 +52,19 @@ def run_showcase(output: Path, openrouter: bool = False, models: dict[str, str] 
         if not connector.configured:
             rows.append(_row(name, "SKIPPED (no API key)", model=model))
             continue
+        had_response = False
+        had_error = False
         for task in TASKS:
             for wrapped in (False, True):
                 try:
                     response, tokens, elapsed = _call(connector, task, wrapped)
                     raw["results"].append({"provider": name, "model": model, "task": task, "mode": "acg" if wrapped else "vanilla", "response": response, "tokens": tokens, "round_trips": 1, "elapsed_seconds": elapsed})
+                    had_response = True
                 except requests.RequestException as exc:
+                    had_error = True
                     raw["results"].append({"provider": name, "model": model, "task": task, "mode": "acg" if wrapped else "vanilla", "status": f"ERROR: {exc}"})
-        rows.append(_row(name, "MEASURED", model=model))
+        status = "MEASURED" if had_response else ("ERROR (all requests failed)" if had_error else "NO RESULTS")
+        rows.append(_row(name, status, model=model))
     (logs / "results.json").write_text(json.dumps(raw, indent=2) + "\n")
     lines = ["# Showcase Results", "", "All provider statuses and raw responses are saved in `showcase_logs/results.json`.", "", "| Provider | Model | Status |", "|---|---|---|"]
     lines += [f"| {r['provider']} | {r['model']} | {r['status']} |" for r in rows]

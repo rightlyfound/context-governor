@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "context-governor"
+version = "0.1.0"
+description = "Adaptive Context Governor with anchored reasoning support"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "rightlyfound"}]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+demo = ["streamlit>=1.35"]
+connectors = ["openai>=1.0", "anthropic>=0.30"]
+
+[project.scripts]
+acg-cli = "context_governor.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

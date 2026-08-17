@@ -22,6 +22,20 @@ Run the test suite with:
 pytest
 ```
 
+## OpenRouter Showcase
+
+The optional showcase can route requests through OpenRouter's documented chat-completions endpoint. It reads `OPENROUTER_API_KEY` from the process environment at runtime and never writes the key to logs. Copy `.env.example` to `.env`, populate the key locally, and export it before running:
+
+```bash
+set -a
+source .env
+set +a
+python scripts/showcase.py --openrouter --output showcase_results
+python scripts/dashboard.py --results showcase_results/showcase_logs/results.json --output showcase_results/dashboard.html
+```
+
+Do not paste the key into chat, commit `.env`, or put it in GitHub. If it is exposed, revoke it in OpenRouter and create a replacement. A missing key produces `SKIPPED (no API key)` rather than a fabricated result.
+
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE).

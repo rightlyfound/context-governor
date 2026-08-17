@@ -10,12 +10,13 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
 authors = [{name = "rightlyfound"}]
-dependencies = []
+dependencies = ["requests>=2.31"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 demo = ["streamlit>=1.35"]
-connectors = ["openai>=1.0", "anthropic>=0.30"]
+connectors = ["openai>=1.0.0", "anthropic>=0.7.0", "tiktoken>=0.7"]
+showcase = ["streamlit>=1.35", "plotly>=5.20"]
 
 [project.scripts]
 acg-cli = "context_governor.cli:main"

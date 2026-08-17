@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    "circular-import",
+    "hidden-env-var",
+    "type-mismatch"
+  ],
+  "providers": [
+    {
+      "provider": "OpenAI GPT-4o",
+      "vanilla": "READY (live key configured)",
+      "acg_wrapped": "READY (live key configured)",
+      "token_economy": "not measured",
+      "precision": "not measured",
+      "round_trips": "not measured"
+    },
+    {
+      "provider": "Anthropic Claude",
+      "vanilla": "SKIPPED (no API key)",
+      "acg_wrapped": "SKIPPED (no API key)",
+      "token_economy": "not measured",
+      "precision": "not measured",
+      "round_trips": "not measured"
+    },
+    {
+      "provider": "DeepSeek",
+      "vanilla": "SKIPPED (no API key)",
+      "acg_wrapped": "SKIPPED (no API key)",
+      "token_economy": "not measured",
+      "precision": "not measured",
+      "round_trips": "not measured"
+    }
+  ],
+  "mode": "live-if-configured"
+}
